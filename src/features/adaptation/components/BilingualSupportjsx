@@ -1,0 +1,96 @@
+// src/features/adaptation/components/BilingualSupport.jsx
+import React from 'react';
+import { commonLanguages } from '../../../utils/constants';
+import FormField from '../../../components/forms/FormField';
+import Select from '../../../components/ui/Select';
+
+const BilingualSupport = ({
+  includeBilingualSupport,
+  nativeLanguage,
+  translateSummary,
+  translateInstructions,
+  listCognates,
+  onBilingualSupportChange,
+  onNativeLanguageChange,
+  onTranslateSummaryChange,
+  onTranslateInstructionsChange,
+  onListCognatesChange
+}) => {
+  return (
+    <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+      <div className="flex items-center mb-3">
+        <input
+          type="checkbox"
+          id="bilingual-support"
+          checked={includeBilingualSupport}
+          onChange={(e) => onBilingualSupportChange(e.target.checked)}
+          className="mr-3 w-4 h-4 text-blue-600"
+        />
+        <label htmlFor="bilingual-support" className="text-sm font-medium text-gray-700">
+          Include bilingual vocabulary support
+        </label>
+      </div>
+      
+      {includeBilingualSupport && (
+        <div className="space-y-3 pt-3 border-t mt-3">
+          <FormField
+            label="Student's Native Language"
+            required
+            error={!nativeLanguage}
+            errorMessage="(Required when bilingual support is enabled)"
+          >
+            <Select
+              value={nativeLanguage}
+              onChange={onNativeLanguageChange}
+              placeholder="Select Language"
+              options={commonLanguages.map(lang => ({ value: lang, label: lang }))}
+            />
+          </FormField>
+          
+          <div className="space-y-2">
+            <div className="flex items-center">
+              <input 
+                type="checkbox" 
+                id="translate-summary" 
+                checked={translateSummary} 
+                onChange={(e) => onTranslateSummaryChange(e.target.checked)} 
+                className="mr-3 w-4 h-4 text-blue-600" 
+              />
+              <label htmlFor="translate-summary" className="text-sm text-gray-700">
+                Add bilingual background summary
+              </label>
+            </div>
+            
+            <div className="flex items-center">
+              <input 
+                type="checkbox" 
+                id="translate-instructions" 
+                checked={translateInstructions} 
+                onChange={(e) => onTranslateInstructionsChange(e.target.checked)} 
+                className="mr-3 w-4 h-4 text-blue-600" 
+              />
+              <label htmlFor="translate-instructions" className="text-sm text-gray-700">
+                Translate activity instructions
+              </label>
+            </div>
+            
+            <div className="flex items-center">
+              <input 
+                type="checkbox" 
+                id="list-cognates" 
+                checked={listCognates} 
+                onChange={(e) => onListCognatesChange(e.target.checked)} 
+                className="mr-3 w-4 h-4 text-blue-600" 
+              />
+              <label htmlFor="list-cognates" className="text-sm text-gray-700">
+                List cognates in Teacher's Guide
+              </label>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default BilingualSupport;
